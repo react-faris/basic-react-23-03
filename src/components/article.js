@@ -1,25 +1,27 @@
 import React, { PureComponent } from 'react'
+import Comments from './comments'
 
 class Article extends PureComponent {
     render() {
-        const { article, isOpen, toggleOpen } = this.props
+        const { article: {title, id}, isOpen, toggleOpen } = this.props
         console.log('---', 'rendering article')
         return (
             <div>
-                <h2>{article.title}</h2>
-                <button onClick = {() => toggleOpen(article.id)}>{isOpen ? 'close' : 'open'}</button>
+                <h2>{title}</h2>
+                <button onClick = {() => toggleOpen(id)}>{isOpen ? 'close' : 'open'}</button>
                 {this.getBody()}
             </div>
         )
     }
 
     getBody() {
-        const { article, isOpen } = this.props
+        const { article: {text, comments}, isOpen } = this.props
         if (!isOpen) return null
 
         return (
             <section>
-                {article.text}
+                <p>{text}</p>
+                <Comments comments={comments} isOpen={false}/>
             </section>
         )
     }
