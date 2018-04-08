@@ -17,12 +17,12 @@ class Article extends PureComponent {
     }
 
     render() {
-        const { article, isOpen, toggleOpen } = this.props
+        const { article: { title, id, date }, isOpen, toggleOpen } = this.props
         return (
             <div>
-                <h2>{article.title}</h2>
+                <h2>{`${date} : ${title}`}</h2>
                 <button className = "test--article__btn"
-                        onClick = {() => toggleOpen(article.id)}
+                        onClick = {() => toggleOpen(id)}
                 >
                     {isOpen ? 'close' : 'open'}
                 </button>

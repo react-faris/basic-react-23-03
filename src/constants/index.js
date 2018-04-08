@@ -1,3 +1,7 @@
 export const INCREMENT = 'INCREMENT'
 
 export const DELETE_ARTICLE = 'DELETE_ARTICLE'
+
+export const SELECT_BY_DATE = 'SELECT_BY_DATE'
+
+export const SELECT_BY_PICK = 'SELECT_BY_PICK'
