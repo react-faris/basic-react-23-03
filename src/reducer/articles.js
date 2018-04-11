@@ -1,14 +1,14 @@
+import { normalizedArticles as defaultArticles } from '../fixtures'
 import { DELETE_ARTICLE } from '../constants'
-import defaultArticles from '../fixtures'
 
-export default (articleState = defaultArticles, action) => {
+export default (articlesState = defaultArticles, action) => {
     const { type, payload } = action
 
     switch (type) {
         case DELETE_ARTICLE:
-            return articleState.filter(article => article.id !== payload.id)
+            return articlesState.filter(article => article.id !== payload.id)
 
         default:
-            return articleState
+            return articlesState
     }
 }
