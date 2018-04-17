@@ -1,6 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
 import reducer from '../reducer'
 import logger from '../middlewares/logger'
+import randomId from '../middlewares/randomId'
+import api from '../middlewares/api'
 
 const composeEnhancers =
     typeof window === 'object' &&
@@ -9,7 +12,7 @@ const composeEnhancers =
             // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
         }) : compose
 
-const enhancer = composeEnhancers(applyMiddleware(logger))
+const enhancer = composeEnhancers(applyMiddleware(thunk, api, randomId, logger))
 
 const store = createStore(reducer, enhancer)
 

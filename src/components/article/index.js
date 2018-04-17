@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import CommentList from '../comment-list'
 import CSSTransition from 'react-addons-css-transition-group'
-import { deleteArticle } from '../../ac'
+import { deleteArticle, loadArticleById } from '../../ac'
+import Loader from '../common/loader'
+import { articleSelector } from '../../selectors'
 import './style.css'
 
 class Article extends PureComponent {
@@ -12,12 +14,18 @@ class Article extends PureComponent {
     }
 
     componentDidCatch(error) {
-        console.log('---', 'some error', error)
         this.setState({ error })
+    }
+
+    componentDidMount() {
+        const { article, loadArticleById, id } = this.props
+        if (!article || (!article.text && !article.loading)) loadArticleById(id)
     }
 
     render() {
         const { article, isOpen, toggleOpen } = this.props
+        if (!article) return null
+
         return (
             <div>
                 <h2>{article.title}</h2>
@@ -51,24 +59,29 @@ class Article extends PureComponent {
         if (this.state.error) return <h2>Some error</h2>
         if (!isOpen) return null
 
+        if (article.loading) return <Loader />
         return (
             <section className = "test--article__body">
                 {article.text}
-                <CommentList comments={article.comments}/>
+                <CommentList article = {article}/>
             </section>
         )
     }
 }
 
 Article.propTypes = {
+    id: PropTypes.string,
+
     isOpen: PropTypes.bool,
     article: PropTypes.shape({
-        title: PropTypes.string.isRequired,
+        title: PropTypes.string,
         text: PropTypes.string
-    }).isRequired,
+    }),
     toggleOpen: PropTypes.func,
     deleteArticle: PropTypes.func
 }
 
 
-export default connect(null, { deleteArticle })(Article)
+export default connect((state, props) => ({
+    article: articleSelector(state, props)
+}), { deleteArticle, loadArticleById })(Article)
