@@ -25,3 +25,8 @@ export const createCommentSelector = () => createSelector(commentMapSelector, id
 })
 
 export const articleSelector = createSelector(articlesMapSelector, idSelector, (articles, id) => articles.get(id))
+
+export const loadingCommentPagesSelector = createSelector(state => state.comments.loadingCommentPages, loadingCommentPages => loadingCommentPages.toJS())
+export const loadedCommentPagesSelector = createSelector(state => state.comments.loadedCommentPages, loadedCommentPages => loadedCommentPages.toJS())
+export const commentsPageCountSelector = state => state.comments.pagesCount
+export const commentsOnPagesSelector = createSelector(state => state.comments.commentsOnPages, commentsOnPages => commentsOnPages.toJS())
